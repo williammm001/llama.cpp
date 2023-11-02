@@ -132,7 +132,7 @@ int main(int argc, char ** argv) {
     // sample from the last token of the prompt
     drafts[0].i_batch_tgt.resize(1);
     drafts[0].i_batch_tgt[0] = 0;
-
+    std::vector<float> ac_rates;
     while (true) {
         // print current draft sequences
         for (int s = 0; s < n_seq_dft; ++s) {
@@ -200,6 +200,7 @@ int main(int argc, char ** argv) {
             LOG("!!!");
             if (n_drafted >0){
                 LOG("accept    = %.3f%%\n", 100.0f * n_accept / n_drafted);
+                ac_rates.push_back(100.0f * n_accept / n_drafted);
             }
             LOG("!!!");
 
@@ -392,6 +393,8 @@ int main(int argc, char ** argv) {
 
     auto t_dec_end = ggml_time_us();
 
+
+    LOG_TEE("\n\n");    
     LOG_TEE("\n\n");
 
     LOG_TEE("encoded %4d tokens in %8.3f seconds, speed: %8.3f t/s\n", n_input,   (t_enc_end - t_enc_start) / 1e6f, inp.size() / ((t_enc_end - t_enc_start) / 1e6f));
@@ -427,5 +430,11 @@ int main(int argc, char ** argv) {
 
     fprintf(stderr, "\n\n");
 
+    for (int i=0; i<ac_rates.size(); ++i) {
+        LOG(ac_rates[i]);
+        LOG("\n");
+        LOG_TEE(ac_rates[i]);
+        LOG_TEE("\n");
+    }
     return 0;
 }
