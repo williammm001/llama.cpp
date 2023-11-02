@@ -430,11 +430,9 @@ int main(int argc, char ** argv) {
 
     fprintf(stderr, "\n\n");
 
-    for (int i=0; i<ac_rates.size(); ++i) {
-        LOG(ac_rates[i]);
-        LOG("\n");
-        LOG_TEE(ac_rates[i]);
-        LOG_TEE("\n");
+    for (float num : myFloats) {
+        LOG("\n%.3f\n", num);
+        LOG_TEE("\n%.3f\n", num);
     }
     return 0;
 }
