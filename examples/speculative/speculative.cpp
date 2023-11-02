@@ -198,6 +198,10 @@ int main(int argc, char ** argv) {
                 }
             }
 
+            if (n_drafted >0){
+                LOG("accept    = %.3f%%\n", 100.0f * n_accept / n_drafted);
+            }
+
             LOG("the sampled target token (%d, '%s') did not match, or we ran out of drafted tokens\n", id, token_str.c_str());
 
             // TODO: simplify
@@ -268,7 +272,7 @@ int main(int argc, char ** argv) {
                 }
 
                 llama_sampling_sample(drafts[s].ctx_sampling, ctx_dft, NULL, drafts[s].i_batch_dft);
-
+LOG_TEE("accept    = %.3f%%\n", 100.0f * n_accept / n_drafted);
                 const auto & cur_p = drafts[s].ctx_sampling->cur;
 
                 for (int k = 0; k < std::min(n_seq_dft + 3, (int) cur_p.size()); ++k) {
@@ -335,7 +339,7 @@ int main(int argc, char ** argv) {
                     // add unique drafted tokens to the target batch
                     drafts[s].i_batch_tgt.push_back(batch_tgt.n_tokens);
 
-                    llama_batch_add(batch_tgt, id, n_past_tgt + i + 1, { s }, true);
+                    llama_bLOG_TEE("accept    = %.3f%%\n", 100.0f * n_accept / n_drafted);atch_add(batch_tgt, id, n_past_tgt + i + 1, { s }, true);
 
                     // add the token to the batch for batched decoding with the draft model
                     drafts[s].i_batch_dft = batch_dft.n_tokens;
