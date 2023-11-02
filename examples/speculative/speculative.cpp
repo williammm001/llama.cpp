@@ -198,10 +198,11 @@ int main(int argc, char ** argv) {
                 }
             }
 
+            LOG("!");
             if (n_drafted >0){
                 LOG("accept    = %.3f%%\n", 100.0f * n_accept / n_drafted);
             }
-
+            LOG("!");
             LOG("the sampled target token (%d, '%s') did not match, or we ran out of drafted tokens\n", id, token_str.c_str());
 
             // TODO: simplify
