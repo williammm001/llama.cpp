@@ -430,7 +430,7 @@ int main(int argc, char ** argv) {
 
     fprintf(stderr, "\n\n");
 
-    for (float num : myFloats) {
+    for (float num : ac_rates) {
         LOG("\n%.3f\n", num);
         LOG_TEE("\n%.3f\n", num);
     }
